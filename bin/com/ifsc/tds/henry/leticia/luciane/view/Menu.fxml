@@ -10,16 +10,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="pnlPrincipal" prefHeight="400.0" prefWidth="640.0" stylesheets="@menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.MenuController">
+<VBox fx:id="pnlPrincipal" prefHeight="400.0" prefWidth="640.0" stylesheets="@menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ifsc.tds.henry.leticia.luciane.controller.MenuController">
   <children>
     <MenuBar fx:id="barMenu" VBox.vgrow="NEVER">
       <menus>
         <Menu fx:id="mnuCadastro" mnemonicParsing="false" text="Cadastro">
           <items>
-                  <MenuItem fx:id="mnoAmigo" mnemonicParsing="false" onAction="#onClickMnoAmigo" text="Amigo" />
-            <MenuItem fx:id="mnoCaixa" mnemonicParsing="false" onAction="#onClickMnoCaixa" text="Caixa" />
-            <MenuItem fx:id="mnoTipoColecao" mnemonicParsing="false" onAction="#onClickMnoTipoColecao" text="Tipo de Coleção" />
-            <MenuItem fx:id="mnoRevista" mnemonicParsing="false" onAction="#onClickMnoRevista" text="Revista" />
+                  <MenuItem fx:id="mnoCliente" mnemonicParsing="false" onAction="#onClickMnoCliente" text="Clientes" />
+            <MenuItem fx:id="mnoFilme" mnemonicParsing="false" onAction="#onClickMnoFilme" text="Filmes" />
+            <MenuItem fx:id="mnoEmprestimo" mnemonicParsing="false" onAction="#onClickMnoEmprestimo" text="Empréstimos" />
             <SeparatorMenuItem fx:id="sepCadastro" mnemonicParsing="false" />
             <MenuItem fx:id="mnoSair" mnemonicParsing="false" onAction="#onClickMnoSair" text="Sair" />
           </items>
