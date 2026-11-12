@@ -42,7 +42,7 @@ public class MenuController implements Initializable {
 	private Menu mnuCadastro;
 
 	@FXML
-	private MenuItem mnoAmigo;
+	private MenuItem mnoCliente;
 
 	@FXML
 	private MenuItem mnoCaixa;
@@ -51,7 +51,7 @@ public class MenuController implements Initializable {
 	private MenuItem mnoTipoColecao;
 
 	@FXML
-	private MenuItem mnoRevista;
+	private MenuItem mnoFilme;
 
 	@FXML
 	private SeparatorMenuItem sepCadastro;
@@ -91,22 +91,22 @@ public class MenuController implements Initializable {
 	}
 	
 	@FXML
-    void onClickMnoAmigo(ActionEvent event) {
+    void onClickMnoCliente(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/AmigoLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/ClienteLista.fxml"));
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
-			AmigoListaController amigoListaController = loader.getController();
+			ClienteListaController clienteListaController = loader.getController();
 			Scene caixaListaLayout = new Scene(caixaListaXML);
 
 			this.getStage().setScene(caixaListaLayout);
-			this.getStage().setTitle("Cadastro de amigo");
+			this.getStage().setTitle("Cadastro de cliente");
 
 			// atribuindo evento para fechar janela
 			this.getStage().setOnCloseRequest(e -> {
-				if (amigoListaController.onCloseQuery()) {
+				if (clienteListaController.onCloseQuery()) {
 					this.getStage().close();
 				} else {
 					e.consume();
@@ -182,18 +182,18 @@ public class MenuController implements Initializable {
 		try {
 			// carregando o loader
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/RevistaLista.fxml"));
-			Parent revistaListaXML = loader.load();
+			Parent clienteListaXML = loader.load();
 
 			// carregando o controller e a scene
-			RevistaListaController revistaListaController = loader.getController();
-			Scene revistaListaLayout = new Scene(revistaListaXML);
+			ClienteaListaController filmeListaController = loader.getController();
+			Scene filmeListaLayout = new Scene(filmeListaXML);
 
-			this.getStage().setScene(revistaListaLayout);
-			this.getStage().setTitle("Cadastro de revista");
+			this.getStage().setScene(clienteListaLayout);
+			this.getStage().setTitle("Cadastro de filme");
 
 			// atribuindo evento para fechar janela
 			this.getStage().setOnCloseRequest(e -> {
-				if (revistaListaController.onCloseQuery()) {
+				if (filmeListaController.onCloseQuery()) {
 					this.getStage().close();
 				} else {
 					e.consume();
