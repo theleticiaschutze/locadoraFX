@@ -5,17 +5,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema locadoradb
 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `locadoradb` DEFAULT CHARACTER SET utf8 ;
+USE `locadoradb` ;
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`cliente`
+-- Table `locadoradb`.`cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -28,7 +24,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `mydb`.`revista`
+-- Table `locadoradb`.`revista`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`revista` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -40,7 +36,7 @@ AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `mydb`.`emprestimo`
+-- Table `locadoradb`.`emprestimo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`emprestimo` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,

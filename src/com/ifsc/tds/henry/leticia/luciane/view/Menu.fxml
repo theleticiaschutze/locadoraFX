@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="pnlPrincipal" prefHeight="400.0" prefWidth="640.0" stylesheets="@menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.MenuController">
+  <children>
+    <MenuBar fx:id="barMenu" VBox.vgrow="NEVER">
+      <menus>
+        <Menu fx:id="mnuCadastro" mnemonicParsing="false" text="Cadastro">
+          <items>
+                  <MenuItem fx:id="mnoAmigo" mnemonicParsing="false" onAction="#onClickMnoAmigo" text="Amigo" />
+            <MenuItem fx:id="mnoCaixa" mnemonicParsing="false" onAction="#onClickMnoCaixa" text="Caixa" />
+            <MenuItem fx:id="mnoTipoColecao" mnemonicParsing="false" onAction="#onClickMnoTipoColecao" text="Tipo de Coleção" />
+            <MenuItem fx:id="mnoRevista" mnemonicParsing="false" onAction="#onClickMnoRevista" text="Revista" />
+            <SeparatorMenuItem fx:id="sepCadastro" mnemonicParsing="false" />
+            <MenuItem fx:id="mnoSair" mnemonicParsing="false" onAction="#onClickMnoSair" text="Sair" />
+          </items>
+        </Menu>
+        <Menu fx:id="mnuAjuda" mnemonicParsing="false" text="Ajuda">
+          <items>
+            <MenuItem fx:id="mnoSobre" mnemonicParsing="false" onAction="#onClickMnoSobre" text="Sobre" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane fx:id="pnlMeio" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+      <HBox fx:id="pnlStatuBar" alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="640.0">
+         <children>
+            <Label fx:id="lblData" text="Data:" />
+            <Separator fx:id="sepData" orientation="VERTICAL" prefHeight="200.0" />
+            <Label fx:id="lblHora" text="Hora:" />
+         </children>
+      </HBox>
+  </children>
+</VBox>
