@@ -3,7 +3,7 @@ package com.ifsc.tds.henry.leticia.luciane.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.entity.Amigo;
+import com.peregrinoti.entity.Cliente;
 import com.peregrinoti.entity.TipoColecao;
 
 import javafx.event.ActionEvent;
@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class CleinteEditController {
+public class ClienteEditController {
 
 	@FXML
 	private Button btnCancela;
@@ -26,7 +26,7 @@ public class CleinteEditController {
 	private Button btnOK;
 
 	@FXML
-	private Label lblEndereco;
+	private Label lblEmail;
 
 	@FXML
 	private Label lblNome;
@@ -43,63 +43,59 @@ public class CleinteEditController {
 	@FXML
 	private AnchorPane pnlPrincipal;
 
-	@FXML
-	private TextField txtEndereco;
+    @FXML
+    private TextField txtEmail;
 
-	@FXML
-	private TextField txtNome;
+    @FXML
+    private TextField txtNome;
 
-	@FXML
-	private TextField txtNomeResponsavel;
+    @FXML
+    private TextField txtTelefone;
 
-	@FXML
-	private TextField txtTelefone;
 
-	private Stage janelaAmigoEdit;
+	private Stage janelaClienteEdit;
 
-	private Amigo amigo;
+	private Cliente cliente;
 
 	private boolean okClick = false;
 
 	@FXML
 	void onClickBtnCancela(ActionEvent event) {
-		this.getJanelaAmigoEdit().close();
+		this.getJanelaClienteEdit().close();
 	}
 
 	@FXML
 	void onClickBtnOK(ActionEvent event) {
 		if (validarCampos()) {
-			this.amigo.setNome(this.txtNome.getText());
-			this.amigo.setNomeResponsavel(this.txtNomeResponsavel.getText());
-			this.amigo.setTelefone(this.txtTelefone.getText());
-			this.amigo.setEndereco(this.txtEndereco.getText());
+			this.cliente.setNome(this.txtNome.getText());			
+			this.cliente.setTelefone(this.txtTelefone.getText());
+			this.cliente.setEmail(this.txtmail.getText());
 
 			this.okClick = true;
-			this.getJanelaAmigoEdit().close();
+			this.getJanelaClienteEdit().close();
 		}
 	}
 
-	public void setJanelaAmigoEdit(Stage janelaAmigoEdit) {
-		this.janelaAmigoEdit = janelaAmigoEdit;
+	public void setJanelaClienteEdit(Stage janelaClienteEdit) {
+		this.janelaClienteEdit = janelaClienteEdit;
 	}
 
-	public Stage getJanelaAmigoEdit() {
-		return janelaAmigoEdit;
+	public Stage getJanelaClienteEdit() {
+		return janelaClienteEdit;
 	}
 
-	public void populaTela(Amigo amigo) {
-		this.amigo = amigo;
+	public void populaTela(Cliente cliente) {
+		this.cliente = cliente;
 
-		this.txtNome.setText(amigo.getNome());
-		this.txtNomeResponsavel.setText(amigo.getNomeResponsavel());
-		this.txtTelefone.setText(amigo.getTelefone());
-		this.txtEndereco.setText(amigo.getEndereco());
+		this.txtNome.setText(cliente.getNome());		
+		this.txtTelefone.setText(cliente.getTelefone());
+		this.txtEmail.setText(cliente.getEndereco());
 	}
 
 	public boolean isOkClick() {
 		return okClick;
 	}
-	
+
 	private boolean validarCampos() {
 		String mensagemErros = new String();
 
@@ -111,7 +107,7 @@ public class CleinteEditController {
 			return true;
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.initOwner(this.janelaAmigoEdit);
+			alerta.initOwner(this.janelaClienteEdit);
 			alerta.setTitle("Dados inválidos!");
 			alerta.setHeaderText("Favor corrigir as seguintes informações:");
 			alerta.setContentText(mensagemErros);
@@ -120,5 +116,5 @@ public class CleinteEditController {
 			return false;
 		}
 	}
-	
+
 }
