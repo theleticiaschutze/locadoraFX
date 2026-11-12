@@ -6,11 +6,9 @@ public class Cliente {
 
 	private String nome;
 
-	private String nomeResponsavel;
-
 	private String telefone;
 
-	private String endereco;
+	private String email;
 
 	public Long getId() {
 		return id;
@@ -28,14 +26,6 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getNomeResponsavel() {
-		return nomeResponsavel;
-	}
-
-	public void setNomeResponsavel(String nomeResponsavel) {
-		this.nomeResponsavel = nomeResponsavel;
-	}
-
 	public String getTelefone() {
 		return telefone;
 	}
@@ -44,12 +34,12 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
