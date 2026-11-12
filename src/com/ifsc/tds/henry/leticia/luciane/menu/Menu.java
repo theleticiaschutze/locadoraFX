@@ -1,5 +1,7 @@
 package com.ifsc.tds.henry.leticia.luciane.menu;
 
+import com.ifsc.tds.henry.leticia.luciane.controller.MenuController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
