@@ -98,7 +98,7 @@ public class MenuController implements Initializable {
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
-			AmigoListaController amigoListaController = loader.getController();
+			ClienteListaController amigoListaController = loader.getController();
 			Scene caixaListaLayout = new Scene(caixaListaXML);
 
 			this.getStage().setScene(caixaListaLayout);

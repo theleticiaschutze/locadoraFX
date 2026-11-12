@@ -34,7 +34,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AmigoListaController implements Initializable {
+public class ClienteListaController implements Initializable {
 
 	@FXML
 	private ButtonBar barBotoes;
@@ -109,7 +109,7 @@ public class AmigoListaController implements Initializable {
 
 		if (amigo != null) {
 			boolean btnConfirmarClic = this.onShowTelaAmigoEditar(amigo,
-					AmigoListaController.AMIGO_EDITAR);
+					ClienteListaController.AMIGO_EDITAR);
 
 			if (btnConfirmarClic) {
 				this.getAmigoDAO().update(amigo, null);
@@ -153,7 +153,7 @@ public class AmigoListaController implements Initializable {
 	void onClickBtnIncluir(ActionEvent event) {
 		Amigo amigo = new Amigo();
 
-		boolean btnConfirmarClic = this.onShowTelaAmigoEditar(amigo, AmigoListaController.AMIGO_INCLUIR);
+		boolean btnConfirmarClic = this.onShowTelaAmigoEditar(amigo, ClienteListaController.AMIGO_INCLUIR);
 
 		if (btnConfirmarClic) {
 			this.getAmigoDAO().save(amigo);
@@ -177,7 +177,7 @@ public class AmigoListaController implements Initializable {
 			janelaAmigoEditar.setScene(amigoEditLayout);
 
 			// carregando o controller e a scene
-			AmigoEditController amigoEditController = loader.getController();
+			CleinteEditController amigoEditController = loader.getController();
 			amigoEditController.setJanelaAmigoEdit(janelaAmigoEditar);
 			amigoEditController.populaTela(amigo);
 

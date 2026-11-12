@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class AmigoEditController {
+public class CleinteEditController {
 
 	@FXML
 	private Button btnCancela;
