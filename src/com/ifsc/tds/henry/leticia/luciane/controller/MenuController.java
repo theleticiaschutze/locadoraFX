@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.peregrinoti.controller.AmigoListaController;
+import com.peregrinoti.controller.RevistaListaController;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,13 +48,11 @@ public class MenuController implements Initializable {
 	private MenuItem mnoCliente;
 
 	@FXML
-	private MenuItem mnoCaixa;
-
-	@FXML
-	private MenuItem mnoTipoColecao;
-
-	@FXML
 	private MenuItem mnoFilme;
+
+	@FXML
+	private MenuItem mnoEmprestimo;
+
 
 	@FXML
 	private SeparatorMenuItem sepCadastro;
@@ -89,24 +90,24 @@ public class MenuController implements Initializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	@FXML
     void onClickMnoAmigo(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/ClienteLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/AmigoLista.fxml"));
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
-			ClienteListaController clienteListaController = loader.getController();
+			ClienteListaController amigoListaController = loader.getController();
 			Scene caixaListaLayout = new Scene(caixaListaXML);
 
 			this.getStage().setScene(caixaListaLayout);
-			this.getStage().setTitle("Cadastro de cliente");
+			this.getStage().setTitle("Cadastro de amigo");
 
 			// atribuindo evento para fechar janela
 			this.getStage().setOnCloseRequest(e -> {
-				if (clienteListaController.onCloseQuery()) {
+				if (amigoListaController.onCloseQuery()) {
 					this.getStage().close();
 				} else {
 					e.consume();
@@ -118,67 +119,9 @@ public class MenuController implements Initializable {
 			e.printStackTrace();
 		}
     }
-
+	
 	@FXML
-	void onClickMnoCaixa(ActionEvent event) {
-		try {
-			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/CaixaLista.fxml"));
-			Parent caixaListaXML = loader.load();
-
-			// carregando o controller e a scene
-			CaixaListaController caixaListaController = loader.getController();
-			Scene caixaListaLayout = new Scene(caixaListaXML);
-
-			this.getStage().setScene(caixaListaLayout);
-			this.getStage().setTitle("Cadastro de caixa");
-
-			// atribuindo evento para fechar janela
-			this.getStage().setOnCloseRequest(e -> {
-				if (caixaListaController.onCloseQuery()) {
-					this.getStage().close();
-				} else {
-					e.consume();
-				}
-			});
-
-			this.stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void onClickMnoTipoColecao(ActionEvent event) {
-		try {
-			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/TipoColecaoLista.fxml"));
-			Parent tipoColecaoListaXML = loader.load();
-
-			// carregando o controller e a scene
-			TipoColecaoListaController tipoColecaoListaController = loader.getController();
-			Scene tipoColecaoListaLayout = new Scene(tipoColecaoListaXML);
-
-			this.getStage().setScene(tipoColecaoListaLayout);
-			this.getStage().setTitle("Cadastro de tipo de cole��o");
-
-			// atribuindo evento para fechar janela
-			this.getStage().setOnCloseRequest(e -> {
-				if (tipoColecaoListaController.onCloseQuery()) {
-					this.getStage().close();
-				} else {
-					e.consume();
-				}
-			});
-
-			this.stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void onClickMnoRevista(ActionEvent event) {
+	void onClickMnoFilme(ActionEvent event) {
 		try {
 			// carregando o loader
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/FilmeLista.fxml"));
@@ -207,6 +150,35 @@ public class MenuController implements Initializable {
 	}
 
 	@FXML
+	void onClickMnoEmprestimo(ActionEvent event) {
+		try {
+			// carregando o loader
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/lucine/view/EmprestimoLista.fxml"));
+			Parent emprestimoListaXML = loader.load();
+
+			// carregando o controller e a scene
+			EmprestimoListaController emprestimoListaController = loader.getController();
+			Scene revistaListaLayout = new Scene(emprestimoListaXML);
+
+			this.getStage().setScene(emprestimoListaLayout);
+			this.getStage().setTitle("Cadastro de emprestimo");
+
+			// atribuindo evento para fechar janela
+			this.getStage().setOnCloseRequest(e -> {
+				if (emprestimoListaController.onCloseQuery()) {
+					this.getStage().close();
+				} else {
+					e.consume();
+				}
+			});
+
+			this.stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	void onClickMnoSair(ActionEvent event) {
 		if (this.onCloseQuery()) {
 			System.exit(0);
@@ -219,7 +191,7 @@ public class MenuController implements Initializable {
 	void onClickMnoSobre(ActionEvent event) {
 		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 		alerta.setTitle("Sobre");
-		alerta.setHeaderText("Sistema desenvolvido por: Peregrino TI - 2020.\nDesenvolvido com JavaFX vers�o 1.0.");
+		alerta.setHeaderText("Sistema desenvolvido por: Henry, Letícia e Luciane - 2026.\nDesenvolvido com JavaFX versão 1.0.");
 		alerta.showAndWait();
 	}
 

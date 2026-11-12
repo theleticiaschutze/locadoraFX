@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.dao.AmigoDAO;
-import com.peregrinoti.dao.TipoColecaoDAO;
-import com.peregrinoti.entity.Amigo;
-import com.peregrinoti.entity.TipoColecao;
+import com.peregrinoti.dao.ClienteDAO;
+import com.peregrinoti.dao.ClienteDAO;
+import com.peregrinoti.entity.Cliente;
+import com.peregrinoti.entity.Cliente;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,19 +49,31 @@ public class ClienteListaController implements Initializable {
 	private Button btnInclur;
 
 	@FXML
-	private Label lblDetalhes;
+    private Label lblDataCadastro;
 
-	@FXML
-	private Label lblNome;
+    @FXML
+    private Label lblDataCadastroValor;
 
-	@FXML
-	private Label lblNomeValor;
+    @FXML
+    private Label lblDetalhes;
 
-	@FXML
-	private Label lblTelefone;
+    @FXML
+    private Label lblEmail;
 
-	@FXML
-	private Label lblTelefoneValor;
+    @FXML
+    private Label lblEmailValor;
+
+    @FXML
+    private Label lblNome;
+
+    @FXML
+    private Label lblNomeValor;
+
+    @FXML
+    private Label lblTelefone;
+
+    @FXML
+    private Label lblTelefoneValor;
 
 	@FXML
 	private GridPane pnlDetalhes;
@@ -79,13 +91,13 @@ public class ClienteListaController implements Initializable {
 	private AnchorPane pnlPrincipal;
 
 	@FXML
-	private TableColumn<Amigo, Long> tbcCodigo;
+	private TableColumn<Cliente, Long> tbcCodigo;
 
 	@FXML
-	private TableColumn<Amigo, String> tbcNome;
+	private TableColumn<Cliente, String> tbcNome;
 
 	@FXML
-	private TableView<Amigo> tbvAmigos;
+	private TableView<Cliente> tbvClientes;
 
 	@FXML
 	private Tooltip tlpEditar;
@@ -96,28 +108,28 @@ public class ClienteListaController implements Initializable {
 	@FXML
 	private Tooltip tlpIncluir;
 
-	public static final String AMIGO_EDITAR = " - Editar";
-	public static final String AMIGO_INCLUIR = " - Incluir";
+	public static final String CLIENTE_EDITAR = " - Editar";
+	public static final String CLIENTE_INCLUIR = " - Incluir";
 
-	private AmigoDAO amigoDAO;
-	private List<Amigo> listaAmigos;
-	private ObservableList<Amigo> observableListaAmigos = FXCollections.observableArrayList();
+	private ClienteDAO clienteDAO;
+	private List<Cliente> listaClientes;
+	private ObservableList<Cliente> observableListaClientes = FXCollections.observableArrayList();
 
 	@FXML
 	void onClickBtnEditar(ActionEvent event) {
-		Amigo amigo = this.tbvAmigos.getSelectionModel().getSelectedItem();
+		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
-		if (amigo != null) {
-			boolean btnConfirmarClic = this.onShowTelaAmigoEditar(amigo,
+		if (cliente != null) {
+			boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente,
 					ClienteListaController.AMIGO_EDITAR);
 
 			if (btnConfirmarClic) {
-				this.getAmigoDAO().update(amigo, null);
-				this.carregarTableViewAmigos();
+				this.getClienteDAO().update(cliente, null);
+				this.carregarTableViewClientes();
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha um amigo na tabela!");
+			alerta.setContentText("Por favor, escolha um cliente na tabela!");
 			alerta.show();
 		}
 
@@ -125,13 +137,13 @@ public class ClienteListaController implements Initializable {
 
 	@FXML
 	void onClickBtnExcluir(ActionEvent event) {
-		Amigo amigo = this.tbvAmigos.getSelectionModel().getSelectedItem();
+		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
-		if (amigo != null) {
+		if (cliente != null) {
 
 			Alert alerta = new Alert(AlertType.CONFIRMATION);
 			alerta.setTitle("Pergunta");
-			alerta.setHeaderText("Confirma a exclusão do amigo?\n" + amigo.getNome());
+			alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
 
 			ButtonType botaoNao = ButtonType.NO;
 			ButtonType botaoSim = ButtonType.YES;
@@ -139,52 +151,52 @@ public class ClienteListaController implements Initializable {
 			Optional<ButtonType> resultado = alerta.showAndWait();
 
 			if (resultado.get() == botaoSim) {
-				this.getAmigoDAO().delete(amigo);
-				this.carregarTableViewAmigos();
+				this.getClienteDAO().delete(cliente);
+				this.carregarTableViewClientes();
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha um amigo na tabela!");
+			alerta.setContentText("Por favor, escolha um cliente na tabela!");
 			alerta.show();
 		}
 	}
 
 	@FXML
 	void onClickBtnIncluir(ActionEvent event) {
-		Amigo amigo = new Amigo();
+		Cliente cliente = new Cliente();
 
-		boolean btnConfirmarClic = this.onShowTelaAmigoEditar(amigo, ClienteListaController.AMIGO_INCLUIR);
+		boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente, ClienteListaController.CLIENTE_INCLUIR);
 
 		if (btnConfirmarClic) {
-			this.getAmigoDAO().save(amigo);
-			this.carregarTableViewAmigos();
+			this.getClienteDAO().save(cliente);
+			this.carregarTableViewClientes();
 		}
 	}
 
-	public boolean onShowTelaAmigoEditar(Amigo amigo, String operacao) {
+	public boolean onShowTelaClienteEditar(Cliente cliente, String operacao) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/AmigoEdit.fxml"));
-			Parent amigoEditXML = loader.load();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/ClienteEdit.fxml"));
+			Parent clienteEditXML = loader.load();
 
 			// criando uma janela nova
-			Stage janelaAmigoEditar = new Stage();
-			janelaAmigoEditar.setTitle("Cadastro de amigo " + operacao);
-			janelaAmigoEditar.initModality(Modality.APPLICATION_MODAL);
-			janelaAmigoEditar.resizableProperty().setValue(Boolean.FALSE);
+			Stage janelaClienteEditar = new Stage();
+			janelaClienteEditar.setTitle("Cadastro de cliente " + operacao);
+			janelaClienteEditar.initModality(Modality.APPLICATION_MODAL);
+			janelaClienteEditar.resizableProperty().setValue(Boolean.FALSE);
 
-			Scene amigoEditLayout = new Scene(amigoEditXML);
-			janelaAmigoEditar.setScene(amigoEditLayout);
+			Scene clienteEditLayout = new Scene(clienteEditXML);
+			janelaClienteEditar.setScene(clienteEditLayout);
 
 			// carregando o controller e a scene
-			ClienteEditController amigoEditController = loader.getController();
-			amigoEditController.setJanelaAmigoEdit(janelaAmigoEditar);
-			amigoEditController.populaTela(amigo);
+			ClienteEditController clienteEditController = loader.getController();
+			clienteEditController.setJanelaClienteEdit(janelaClienteEditar);
+			clienteEditController.populaTela(cliente);
 
 			// mostrando a tela
-			janelaAmigoEditar.showAndWait();
+			janelaClienteEditar.showAndWait();
 
-			return amigoEditController.isOkClick();
+			return clienteEditController.isOkClick();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,7 +208,7 @@ public class ClienteListaController implements Initializable {
 	public boolean onCloseQuery() {
 		Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
 		alerta.setTitle("Pergunta");
-		alerta.setHeaderText("Deseja sair do cadastro de amigo?");
+		alerta.setHeaderText("Deseja sair do cadastro de cliente?");
 		ButtonType buttonTypeNO = ButtonType.NO;
 		ButtonType buttonTypeYES = ButtonType.YES;
 		alerta.getButtonTypes().setAll(buttonTypeYES, buttonTypeNO);
@@ -204,54 +216,54 @@ public class ClienteListaController implements Initializable {
 		return result.get() == buttonTypeYES ? true : false;
 	}
 
-	public AmigoDAO getAmigoDAO() {
-		return amigoDAO;
+	public ClienteDAO getClienteDAO() {
+		return clienteDAO;
 	}
 
-	public void setAmigoDAO(AmigoDAO amigoDAO) {
-		this.amigoDAO = amigoDAO;
+	public void setClienteDAO(ClienteDAO clienteDAO) {
+		this.clienteDAO = clienteDAO;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.setAmigoDAO(new AmigoDAO());
-		this.carregarTableViewAmigos();
-		this.selecionarItemTableViewTipoColecoes(null);
+		this.setClienteDAO(new ClienteDAO());
+		this.carregarTableViewClientes();
+		this.selecionarItemTableViewClientes(null);
 
-		this.tbvAmigos.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> selecionarItemTableViewTipoColecoes(newValue));
+		this.tbvClientes.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> selecionarItemTableViewClientes(newValue));
 
 	}
 
-	public void carregarTableViewAmigos() {
+	public void carregarTableViewClientes() {
 		this.tbcCodigo.setCellValueFactory(new PropertyValueFactory<>("id"));
 		this.tbcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
-		this.setListaAmigos(this.getAmigoDAO().getAll());
-		this.setObservableListaTipoColecoes(FXCollections.observableArrayList(this.getListaAmigos()));
-		this.tbvAmigos.setItems(this.getObservableListaAmigos());
+		this.setListaClientes(this.getClienteDAO().getAll());
+		this.setObservableListaClientes(FXCollections.observableArrayList(this.getListaClientes()));
+		this.tbvClientes.setItems(this.getObservableListaClientes());
 	}
 
-	public void setListaAmigos(List<Amigo> listaAmigos) {
-		this.listaAmigos = listaAmigos;
+	public void setListaClientes(List<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
 	}
 
-	public List<Amigo> getListaAmigos() {
-		return listaAmigos;
+	public List<Cliente> getListaClientes() {
+		return listaClientes;
 	}
 
-	public ObservableList<Amigo> getObservableListaAmigos() {
-		return observableListaAmigos;
+	public ObservableList<Cliente> getObservableListaClientes() {
+		return observableListaClientes;
 	}
 
-	public void setObservableListaTipoColecoes(ObservableList<Amigo> observableListaAmigos) {
-		this.observableListaAmigos = observableListaAmigos;
+	public void setObservableListaClientes(ObservableList<Cliente> observableListaClientes) {
+		this.observableListaClientes = observableListaClientes;
 	}
 
-	public void selecionarItemTableViewTipoColecoes(Amigo amigo) {
-		if (amigo != null) {
-			this.lblNomeValor.setText(amigo.getNome());
-			this.lblTelefoneValor.setText(amigo.getTelefone());
+	public void selecionarItemTableViewClientes(Cliente cliente) {
+		if (cliente != null) {
+			this.lblNomeValor.setText(cliente.getNome());
+			this.lblTelefoneValor.setText(cliente.getTelefone());
 		} else {
 			this.lblNomeValor.setText("");
 			this.lblTelefoneValor.setText("");

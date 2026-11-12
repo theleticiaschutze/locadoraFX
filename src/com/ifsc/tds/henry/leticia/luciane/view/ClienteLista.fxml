@@ -40,12 +40,18 @@
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="lblNome" text="Nome" />
                         <Label fx:id="lblNomeValor" GridPane.columnIndex="1" />
                         <Label fx:id="lblTelefone" text="Telefone" GridPane.rowIndex="1" />
                         <Label fx:id="lblTelefoneValor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblEmail" text="E-mail" GridPane.rowIndex="2" />
+                        <Label fx:id="lblEmailValor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="lblDataCadastro" text="Data de Cadastro" GridPane.rowIndex="3" />
+                        <Label fx:id="lblDataCadastroValor" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <ButtonBar fx:id="barBotoes" layoutX="60.0" layoutY="340.0" prefHeight="40.0" prefWidth="200.0">
