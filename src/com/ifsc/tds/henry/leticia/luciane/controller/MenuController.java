@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.peregrinoti.controller.AmigoListaController;
+import com.peregrinoti.controller.RevistaListaController;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -48,6 +49,10 @@ public class MenuController implements Initializable {
 
 	@FXML
 	private MenuItem mnoFilme;
+
+	@FXML
+	private MenuItem mnoEmprestimo;
+
 
 	@FXML
 	private SeparatorMenuItem sepCadastro;
@@ -94,7 +99,7 @@ public class MenuController implements Initializable {
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
-			AmigoListaController amigoListaController = loader.getController();
+			ClienteListaController amigoListaController = loader.getController();
 			Scene caixaListaLayout = new Scene(caixaListaXML);
 
 			this.getStage().setScene(caixaListaLayout);
@@ -145,6 +150,35 @@ public class MenuController implements Initializable {
 	}
 
 	@FXML
+	void onClickMnoEmprestimo(ActionEvent event) {
+		try {
+			// carregando o loader
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/lucine/view/EmprestimoLista.fxml"));
+			Parent emprestimoListaXML = loader.load();
+
+			// carregando o controller e a scene
+			EmprestimoListaController emprestimoListaController = loader.getController();
+			Scene revistaListaLayout = new Scene(emprestimoListaXML);
+
+			this.getStage().setScene(emprestimoListaLayout);
+			this.getStage().setTitle("Cadastro de emprestimo");
+
+			// atribuindo evento para fechar janela
+			this.getStage().setOnCloseRequest(e -> {
+				if (emprestimoListaController.onCloseQuery()) {
+					this.getStage().close();
+				} else {
+					e.consume();
+				}
+			});
+
+			this.stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	void onClickMnoSair(ActionEvent event) {
 		if (this.onCloseQuery()) {
 			System.exit(0);
@@ -157,7 +191,7 @@ public class MenuController implements Initializable {
 	void onClickMnoSobre(ActionEvent event) {
 		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 		alerta.setTitle("Sobre");
-		alerta.setHeaderText("Sistema desenvolvido por: Peregrino TI - 2020.\nDesenvolvido com JavaFX vers�o 1.0.");
+		alerta.setHeaderText("Sistema desenvolvido por: Henry, Letícia e Luciane - 2026.\nDesenvolvido com JavaFX versão 1.0.");
 		alerta.showAndWait();
 	}
 
