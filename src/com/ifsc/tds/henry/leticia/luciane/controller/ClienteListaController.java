@@ -177,7 +177,7 @@ public class ClienteListaController implements Initializable {
 			janelaAmigoEditar.setScene(amigoEditLayout);
 
 			// carregando o controller e a scene
-			CleinteEditController amigoEditController = loader.getController();
+			ClienteEditController amigoEditController = loader.getController();
 			amigoEditController.setJanelaAmigoEdit(janelaAmigoEditar);
 			amigoEditController.populaTela(amigo);
 

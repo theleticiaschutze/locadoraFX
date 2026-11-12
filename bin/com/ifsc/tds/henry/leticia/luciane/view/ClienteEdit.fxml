@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.AmigoEditController">
+<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ifsc.tds.henry.leticia.luciane.controller.ClienteEditController">
    <children>
       <GridPane fx:id="pnlDados" layoutX="25.0" layoutY="25.0" prefHeight="133.0" prefWidth="348.0">
         <columnConstraints>
@@ -25,12 +25,10 @@
          <children>
             <Label fx:id="lblNome" text="Nome" />
             <TextField fx:id="txtNome" GridPane.columnIndex="1" />
-            <Label text="Nome Responsável" GridPane.rowIndex="1" />
-            <TextField fx:id="txtNomeResponsavel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblEmail" text="Email" GridPane.rowIndex="1" />
+            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="lblTelefone" text="Telefone" GridPane.rowIndex="2" />
             <TextField fx:id="txtTelefone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="lblEndereco" text="Endereço" GridPane.rowIndex="3" />
-            <TextField fx:id="txtEndereco" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <HBox fx:id="pnlBotoes" alignment="BASELINE_CENTER" layoutX="100.0" layoutY="206.0" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
