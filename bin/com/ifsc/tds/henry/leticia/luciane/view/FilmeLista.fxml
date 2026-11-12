@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="pnlPrincipal" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.RevistaListaController">
+<AnchorPane fx:id="pnlPrincipal" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ifsc.tds.henry.leticia.luciane.controller.FilmeListaController">
    <children>
       <SplitPane fx:id="pnlDivisao" dividerPositions="0.35618729096989965" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
          <items>
             <AnchorPane fx:id="pnlEsquerda" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tbvRevistas" prefHeight="398.0" prefWidth="210.0">
+                  <TableView fx:id="tbvFilmes" prefHeight="398.0" prefWidth="210.0">
                      <columns>
                         <TableColumn fx:id="tbcCodigo" prefWidth="75.0" text="Código" />
                         <TableColumn fx:id="tbcNome" prefWidth="75.0" text="Nome" />
