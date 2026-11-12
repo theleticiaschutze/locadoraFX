@@ -5,6 +5,8 @@ import java.sql.Date;
 public class Emprestimo {
 
 	private Long id;
+	
+	private String observacao;
 
 	private Date dataEmprestimo;
 
