@@ -18,18 +18,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `nome` VARCHAR(45) NULL DEFAULT NULL,
   `telefone` VARCHAR(45) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
-  `data_cadastro` CURRENT DATE,
+  `data_cadastro` CURRENT DATETIME,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `locadoradb`.`revista`
+-- Table `locadoradb`.`filme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`revista` (
+CREATE TABLE IF NOT EXISTS `mydb`.`filme` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL DEFAULT NULL,
-  `ano` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
@@ -40,6 +39,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`emprestimo` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL DEFAULT NULL,
+  `observacao` VARCHAR(255) NULL DEFAULT NULL,
   `data_emprestimo` DATE NULL DEFAULT NULL,
   `data_devolucao` DATE NULL DEFAULT NULL,
   `amigo_id` INT(11) NOT NULL,
