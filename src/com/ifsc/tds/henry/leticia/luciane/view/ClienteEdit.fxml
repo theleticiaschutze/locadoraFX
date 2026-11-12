@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.AmigoEditController">
+<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ifsc.tds.henry.leticia.luciane.controller.ClienteEditController">
    <children>
       <GridPane fx:id="pnlDados" layoutX="25.0" layoutY="25.0" prefHeight="133.0" prefWidth="348.0">
         <columnConstraints>

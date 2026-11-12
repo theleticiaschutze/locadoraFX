@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.dao.AmigoDAO;
-import com.peregrinoti.dao.TipoColecaoDAO;
+import com.ifsc.tds.henry.leticia.luciane.dao.ClienteDAO;
+import com.ifsc.tds.henry.leticia.luciane.entity.Cliente;
 import com.peregrinoti.entity.Amigo;
-import com.peregrinoti.entity.TipoColecao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -27,7 +27,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -99,25 +98,25 @@ public class ClienteListaController implements Initializable {
 	public static final String CLIENTE_EDITAR = " - Editar";
 	public static final String CLIENTE_INCLUIR = " - Incluir";
 
-	private ClienteDAO amigoDAO;
+	private ClienteDAO clienteDAO;
 	private List<Cliente> listaClientes;
 	private ObservableList<Cliente> observableListaClientes = FXCollections.observableArrayList();
 
 	@FXML
 	void onClickBtnEditar(ActionEvent event) {
-		Cliente amigo = this.tbvClientes.getSelectionModel().getSelectedItem();
+		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
-		if (amigo != null) {
-			boolean btnConfirmarClic = this.onShowTelaClienteEditar(amigo,
-					ClienteListaController.AMIGO_EDITAR);
+		if (cliente != null) {
+			boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente,
+					ClienteListaController.CLIENTE_EDITAR);
 
 			if (btnConfirmarClic) {
-				this.getClienteDAO().update(amigo, null);
+				this.getClienteDAO().update(cliente, null);
 				this.carregarTableViewClientes();
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha um amigo na tabela!");
+			alerta.setContentText("Por favor, escolha um cliente na tabela!");
 			alerta.show();
 		}
 
@@ -125,13 +124,13 @@ public class ClienteListaController implements Initializable {
 
 	@FXML
 	void onClickBtnExcluir(ActionEvent event) {
-		Cliente amigo = this.tbvClientes.getSelectionModel().getSelectedItem();
+		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
-		if (amigo != null) {
+		if (cliente != null) {
 
 			Alert alerta = new Alert(AlertType.CONFIRMATION);
 			alerta.setTitle("Pergunta");
-			alerta.setHeaderText("Confirma a exclusão do amigo?\n" + amigo.getNome());
+			alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
 
 			ButtonType botaoNao = ButtonType.NO;
 			ButtonType botaoSim = ButtonType.YES;
@@ -139,7 +138,7 @@ public class ClienteListaController implements Initializable {
 			Optional<ButtonType> resultado = alerta.showAndWait();
 
 			if (resultado.get() == botaoSim) {
-				this.getClienteDAO().delete(amigo);
+				this.getClienteDAO().delete(cliente);
 				this.carregarTableViewClientes();
 			}
 		} else {
@@ -151,40 +150,40 @@ public class ClienteListaController implements Initializable {
 
 	@FXML
 	void onClickBtnIncluir(ActionEvent event) {
-		Cliente amigo = new Cliente();
+		Cliente cliente = new Cliente();
 
-		boolean btnConfirmarClic = this.onShowTelaClienteEditar(amigo, ClienteListaController.AMIGO_INCLUIR);
+		boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente, ClienteListaController.AMIGO_INCLUIR);
 
 		if (btnConfirmarClic) {
-			this.getClienteDAO().save(amigo);
+			this.getClienteDAO().save(cliente);
 			this.carregarTableViewClientes();
 		}
 	}
 
-	public boolean onShowTelaClienteEditar(Cliente amigo, String operacao) {
+	public boolean onShowTelaClienteEditar(Cliente cliente, String operacao) {
 		try {
 			// carregando o loader
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/ClienteEdit.fxml"));
-			Parent amigoEditXML = loader.load();
+			Parent clienteEditXML = loader.load();
 
 			// criando uma janela nova
 			Stage janelaAmigoEditar = new Stage();
-			janelaClienteEditar.setTitle("Cadastro de amigo " + operacao);
+			janelaClienteEditar.setTitle("Cadastro de cliente " + operacao);
 			janelaClienteEditar.initModality(Modality.APPLICATION_MODAL);
 			janelaClienteEditar.resizableProperty().setValue(Boolean.FALSE);
 
-			Scene amigoEditLayout = new Scene(amigoEditXML);
-			janelaClienteEditar.setScene(amigoEditLayout);
+			Scene clienteEditLayout = new Scene(clienteEditXML);
+			janelaClienteEditar.setScene(clienteEditLayout);
 
 			// carregando o controller e a scene
-			CleinteEditController amigoEditController = loader.getController();
-			amigoEditController.setJanelaAmigoEdit(janelaClienteEditar);
-			amigoEditController.populaTela(amigo);
+			CleinteEditController clienteEditController = loader.getController();
+			clienteEditController.setJanelaAmigoEdit(janelaClienteEditar);
+			clienteEditController.populaTela(cliente);
 
 			// mostrando a tela
 			janelaClienteEditar.showAndWait();
 
-			return amigoEditController.isOkClick();
+			return clienteEditController.isOkClick();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,7 +195,7 @@ public class ClienteListaController implements Initializable {
 	public boolean onCloseQuery() {
 		Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
 		alerta.setTitle("Pergunta");
-		alerta.setHeaderText("Deseja sair do cadastro de amigo?");
+		alerta.setHeaderText("Deseja sair do cadastro de cliente?");
 		ButtonType buttonTypeNO = ButtonType.NO;
 		ButtonType buttonTypeYES = ButtonType.YES;
 		alerta.getButtonTypes().setAll(buttonTypeYES, buttonTypeNO);
@@ -205,11 +204,11 @@ public class ClienteListaController implements Initializable {
 	}
 
 	public ClienteDAO getClienteDAO() {
-		return amigoDAO;
+		return clienteDAO;
 	}
 
-	public void setClienteDAO(ClienteDAO amigoDAO) {
-		this.amigoDAO = amigoDAO;
+	public void setClienteDAO(ClienteDAO clienteDAO) {
+		this.clienteDAO = clienteDAO;
 	}
 
 	@Override
@@ -248,10 +247,10 @@ public class ClienteListaController implements Initializable {
 		this.observableListaClientes = observableListaClientes;
 	}
 
-	public void selecionarItemTableViewTipoColecoes(Cliente amigo) {
-		if (amigo != null) {
-			this.lblNomeValor.setText(amigo.getNome());
-			this.lblTelefoneValor.setText(amigo.getTelefone());
+	public void selecionarItemTableViewTipoColecoes(Cliente cliente) {
+		if (cliente != null) {
+			this.lblNomeValor.setText(cliente.getNome());
+			this.lblTelefoneValor.setText(cliente.getTelefone());
 		} else {
 			this.lblNomeValor.setText("");
 			this.lblTelefoneValor.setText("");
