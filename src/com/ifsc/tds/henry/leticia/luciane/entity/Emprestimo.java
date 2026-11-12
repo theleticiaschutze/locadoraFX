@@ -10,9 +10,9 @@ public class Emprestimo {
 
 	private Date dataDevolucao;
 
-	private Amigo amigo;
+	private Cliente cliente;
 
-	private Filme revista;
+	private Filme filme;
 
 	public Long getId() {
 		return id;
@@ -38,20 +38,20 @@ public class Emprestimo {
 		this.dataDevolucao = dataDevolucao;
 	}
 
-	public Amigo getAmigo() {
-		return amigo;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setAmigo(Amigo amigo) {
-		this.amigo = amigo;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Filme getRevista() {
-		return revista;
+	public Filme getFilme() {
+		return filme;
 	}
 
-	public void setRevista(Filme revista) {
-		this.revista = revista;
+	public void setFilme(Filme revista) {
+		this.filme = filme;
 	}
 
 }
