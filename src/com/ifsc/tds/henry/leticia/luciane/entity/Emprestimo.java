@@ -52,8 +52,16 @@ public class Emprestimo {
 		return filme;
 	}
 
-	public void setFilme(Filme revista) {
+	public void setFilme(Filme filme) {
 		this.filme = filme;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }

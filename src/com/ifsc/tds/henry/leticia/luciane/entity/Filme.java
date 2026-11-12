@@ -1,8 +1,5 @@
 package com.ifsc.tds.henry.leticia.luciane.entity;
 
-import java.sql.Date;
-import java.time.format.DateTimeFormatter;
-
 public class Filme {
 
 	private Long id;

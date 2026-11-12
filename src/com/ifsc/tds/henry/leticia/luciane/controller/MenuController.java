@@ -6,9 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.controller.AmigoListaController;
-import com.peregrinoti.controller.RevistaListaController;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -92,10 +89,10 @@ public class MenuController implements Initializable {
 	}
 
 	@FXML
-    void onClickMnoAmigo(ActionEvent event) {
+    void onClickMnoCliente(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/AmigoLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/ClienteLista.fxml"));
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
@@ -103,7 +100,7 @@ public class MenuController implements Initializable {
 			Scene caixaListaLayout = new Scene(caixaListaXML);
 
 			this.getStage().setScene(caixaListaLayout);
-			this.getStage().setTitle("Cadastro de amigo");
+			this.getStage().setTitle("Cadastro de cliente");
 
 			// atribuindo evento para fechar janela
 			this.getStage().setOnCloseRequest(e -> {
@@ -124,7 +121,7 @@ public class MenuController implements Initializable {
 	void onClickMnoFilme(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/FilmeLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/FilmeLista.fxml"));
 			Parent filmeListaXML = loader.load();
 
 			// carregando o controller e a scene
