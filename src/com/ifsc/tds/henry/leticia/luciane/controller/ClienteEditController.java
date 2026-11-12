@@ -67,10 +67,9 @@ public class ClienteEditController {
 	@FXML
 	void onClickBtnOK(ActionEvent event) {
 		if (validarCampos()) {
-			this.cliente.setNome(this.txtNome.getText());
-			this.cliente.setNomeResponsavel(this.txtNomeResponsavel.getText());
+			this.cliente.setNome(this.txtNome.getText());			
 			this.cliente.setTelefone(this.txtTelefone.getText());
-			this.cliente.setEndereco(this.txtEndereco.getText());
+			this.cliente.setEmail(this.txtmail.getText());
 
 			this.okClick = true;
 			this.getJanelaClienteEdit().close();
@@ -90,7 +89,7 @@ public class ClienteEditController {
 
 		this.txtNome.setText(cliente.getNome());		
 		this.txtTelefone.setText(cliente.getTelefone());
-		this.txtEndereco.setText(cliente.getEndereco());
+		this.txtEmail.setText(cliente.getEndereco());
 	}
 
 	public boolean isOkClick() {
