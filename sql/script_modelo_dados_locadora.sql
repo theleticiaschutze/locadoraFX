@@ -5,57 +5,56 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema locadoradb
+-- Schema locadora
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `locadoradb` DEFAULT CHARACTER SET utf8 ;
-USE `locadoradb` ;
+CREATE SCHEMA IF NOT EXISTS `locadora` DEFAULT CHARACTER SET utf8 ;
+USE `locadora` ;
 
 -- -----------------------------------------------------
--- Table `locadoradb`.`cliente`
+-- Table `locadora`.`cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
+CREATE TABLE IF NOT EXISTS `locadora`.`cliente` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL DEFAULT NULL,
   `telefone` VARCHAR(45) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
-  `data_cadastro` CURRENT DATETIME,
+  `data_cadastro` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `locadoradb`.`filme`
+-- Table `locadora`.`filme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`filme` (
+CREATE TABLE IF NOT EXISTS `locadora`.`filme` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-ENGINE = InnoDB
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
 AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `locadoradb`.`emprestimo`
+-- Table `locadora`.`emprestimo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`emprestimo` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NULL DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `locadora`.`emprestimo` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,  
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
   `data_emprestimo` DATE NULL DEFAULT NULL,
   `data_devolucao` DATE NULL DEFAULT NULL,
-  `amigo_id` INT(11) NOT NULL,
-  `revista_id` INT(11) NOT NULL,
+  `cliente_id` INT(11) NOT NULL,
+  `filme_id` INT(11) NOT NULL,  
   PRIMARY KEY (`id`),
   INDEX `fk_emprestimo_filme_idx` (`filme_id` ASC),
   INDEX `fk_emprestimo_cliente_idx` (`cliente_id` ASC),
   CONSTRAINT `fk_emprestimo_cliente`
     FOREIGN KEY (`cliente_id`)
-    REFERENCES `mydb`.`cliente` (`id`)
+    REFERENCES `locadora`.`cliente` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_emprestimo_filme`
     FOREIGN KEY (`filme_id`)
-    REFERENCES `mydb`.`filme` (`id`)
+    REFERENCES `locadora`.`filme` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

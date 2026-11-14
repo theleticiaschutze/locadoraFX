@@ -6,23 +6,27 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.peregrinoti.entity.Revista;
+import com.ifsc.tds.henry.leticia.luciane.entity.Emprestimo;
+import com.ifsc.tds.henry.leticia.luciane.entity.Cliente;
+import com.ifsc.tds.henry.leticia.luciane.entity.Filme;
 
-public class EmprestimoDAO implements DAO<Revista> {
 
-	private CaixaDAO caixaDAO;
 
-	private TipoColecaoDAO tipoColecaoDAO;
+public class EmprestimoDAO implements DAO<Emprestimo> {
+
+	private ClienteDAO clienteDAO;
+
+	private FilmeDAO filmeDAO;
 
 	public EmprestimoDAO() {
-		this.caixaDAO = new CaixaDAO();
-		this.tipoColecaoDAO = new TipoColecaoDAO();
+		this.clienteDAO = new ClienteDAO();
+		this.filmeDAO = new FilmeDAO();
 	}
 
 	@Override
 	public Object get(Long id) {
-		Revista revista = null;
-		String sql = "select * from revista where id = ?";
+		Emprestimo emprestimo = null;
+		String sql = "select * from emprestimo where id = ?";
 
 		// Recupera a conex�o com o banco
 		Connection conexao = null;
@@ -42,16 +46,17 @@ public class EmprestimoDAO implements DAO<Revista> {
 			rset = stm.executeQuery();
 
 			while (rset.next()) {
-				revista = new Revista();
+				emprestimo = new Emprestimo();
 
 				// atribui campo para atributo
-				revista.setId(rset.getLong("id"));
-				revista.setNome(rset.getString("nome"));
-				revista.setAno(rset.getDate("ano"));
+				emprestimo.setId(rset.getLong("id"));
+				emprestimo.setObservacao(rset.getString("observacao"));
+				emprestimo.setDataEmprestimo(rset.getDate("data_emprestimo"));
+				emprestimo.setDataDevolucao(rset.getDate("data_devolucao"));
 
 				// buscando as chaves estrangeiras
-				revista.setCaixa(this.caixaDAO.get(rset.getLong("caixa_id")));
-				revista.setTipoColecao(this.tipoColecaoDAO.get(rset.getLong("tipo_colecao_id")));
+				emprestimo.setCliente((Cliente) this.clienteDAO.get(rset.getLong("cliente_id")));
+				emprestimo.setFilme((Filme) this.filmeDAO.get(rset.getLong("filme_id")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,14 +73,14 @@ public class EmprestimoDAO implements DAO<Revista> {
 				e.printStackTrace();
 			}
 		}
-		return revista;
+		return emprestimo;
 	}
 
 	@Override
-	public List<Revista> getAll() {
-		List<Revista> revistas = new ArrayList<Revista>();
+	public List<Emprestimo> getAll() {
+		List<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
 
-		String sql = "select * from revista";
+		String sql = "select * from emprestimo";
 
 		// Recupera a conex�o com o banco
 		Connection conexao = null;
@@ -94,18 +99,19 @@ public class EmprestimoDAO implements DAO<Revista> {
 			rset = stm.executeQuery();
 
 			while (rset.next()) {
-				Revista revista = new Revista();
+				Emprestimo emprestimo = new Emprestimo();
 
 				// atribui campo para atributo
-				revista.setId(rset.getLong("id"));
-				revista.setNome(rset.getString("nome"));
-				revista.setAno(rset.getDate("ano"));
+				emprestimo.setId(rset.getLong("id"));
+				emprestimo.setObservacao(rset.getString("observacao"));
+				emprestimo.setDataEmprestimo(rset.getDate("data_emprestimo"));
+				emprestimo.setDataDevolucao(rset.getDate("data_devolucao"));
 
 				// buscando as chaves estrangeiras
-				revista.setCaixa(this.caixaDAO.get(rset.getLong("caixa_id")));
-				revista.setTipoColecao(this.tipoColecaoDAO.get(rset.getLong("tipo_colecao_id")));
+				emprestimo.setCliente((Cliente) this.clienteDAO.get(rset.getLong("cliente_id")));
+				emprestimo.setFilme((Filme) this.filmeDAO.get(rset.getLong("filme_id")));
 
-				revistas.add(revista);
+				emprestimos.add(emprestimo);
 			}
 
 		} catch (Exception e) {
@@ -123,12 +129,12 @@ public class EmprestimoDAO implements DAO<Revista> {
 				e.printStackTrace();
 			}
 		}
-		return revistas;
+		return emprestimos;
 	}
 
 	@Override
-	public int save(Revista revista) {
-		String sql = "insert into revista (nome, ano, caixa_id, tipo_colecao_id)" + " values (?, ?, ?, ?)";
+	public int save(Emprestimo emprestimo) {
+		String sql = "insert into emprestimo (observacao, data_emprestimo, data_devolucao, cliente_id, filme_id)" + " values (?, ?, ?, ?, ?)";
 
 		// Recupera a conex�o com o banco
 		Connection conexao = null;
@@ -141,15 +147,17 @@ public class EmprestimoDAO implements DAO<Revista> {
 			conexao = new Conexao().getConnection();
 
 			stm = conexao.prepareStatement(sql);
-			stm.setString(1, revista.getNome());
-			stm.setDate(2, revista.getAno());
-			stm.setLong(3, revista.getCaixa().getId());
-			stm.setLong(4, revista.getTipoColecao().getId());
+			stm.setString(1, emprestimo.getObservacao());
+			stm.setDate(2, emprestimo.getDataEmprestimo());
+			stm.setDate(3, emprestimo.getDataDevolucao());
+			stm.setLong(4, emprestimo.getCliente().getId());
+			stm.setLong(5, emprestimo.getFilme().getId());
 
 			stm.execute();
-
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		} finally {
 			try {
 				if (stm != null) {
@@ -159,17 +167,17 @@ public class EmprestimoDAO implements DAO<Revista> {
 				if (conexao != null) {
 					conexao.close();
 				}
-				return 1;
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return 0;
+		
 	}
 
 	@Override
-	public boolean update(Revista revista, String[] params) {
-		String sql = "update revista set nome = ?, ano = ?, caixa_id = ?, tipo_colecao_id = ? where id = ?";
+	public boolean update(Emprestimo emprestimo, String[] params) {
+		String sql = "update emprestimo set observacao = ?, data_emprestimo = ?, data_devolucao = ?, cliente_id = ?, filme_id = ? where id = ?";
 
 		// Recupera a conex�o com o banco
 		Connection conexao = null;
@@ -181,16 +189,19 @@ public class EmprestimoDAO implements DAO<Revista> {
 			conexao = new Conexao().getConnection();
 
 			stm = conexao.prepareStatement(sql);
-			stm.setString(1, revista.getNome());
-			stm.setDate(2, revista.getAno());
-			stm.setLong(3, revista.getCaixa().getId());
-			stm.setLong(4, revista.getTipoColecao().getId());
-			stm.setLong(5, revista.getTipoColecao().getId());
+			stm.setString(1, emprestimo.getObservacao());
+			stm.setDate(2, emprestimo.getDataEmprestimo());
+			stm.setDate(3, emprestimo.getDataDevolucao());
+			stm.setLong(4, emprestimo.getCliente().getId());
+			stm.setLong(5, emprestimo.getFilme().getId());
+			stm.setLong(6, emprestimo.getId());
 
 			stm.execute();
+			return true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				if (stm != null) {
@@ -200,17 +211,17 @@ public class EmprestimoDAO implements DAO<Revista> {
 				if (conexao != null) {
 					conexao.close();
 				}
-				return true;
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		
 	}
 
 	@Override
-	public boolean delete(Revista revista) {
-		String sql = "delete from revista where id = ?";
+	public boolean delete(Emprestimo emprestimo) {
+		String sql = "delete from emprestimo where id = ?";
 
 		// Recupera a conex�o com o banco
 		Connection conexao = null;
@@ -222,10 +233,12 @@ public class EmprestimoDAO implements DAO<Revista> {
 			conexao = new Conexao().getConnection();
 
 			stm = conexao.prepareStatement(sql);
-			stm.setLong(1, revista.getId());
+			stm.setLong(1, emprestimo.getId());
 			stm.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				if (stm != null) {
@@ -235,11 +248,11 @@ public class EmprestimoDAO implements DAO<Revista> {
 				if (conexao != null) {
 					conexao.close();
 				}
-				return true;
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		
 	}
 }

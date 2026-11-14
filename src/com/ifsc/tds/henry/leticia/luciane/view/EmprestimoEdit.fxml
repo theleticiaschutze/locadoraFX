@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peregrinoti.controller.RevistaEditController">
+<AnchorPane fx:id="pnlPrincipal" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ifsc.tds.henry.leticia.luciane.controller.EmprestimoEditController">
    <children>
       <GridPane fx:id="pnlDados" layoutX="25.0" layoutY="25.0" prefHeight="152.0" prefWidth="348.0">
         <columnConstraints>
@@ -21,18 +21,21 @@
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblNome" text="Nome" />
-            <TextField fx:id="txtNome" GridPane.columnIndex="1" />
-            <Label fx:id="lblAno" text="Ano" GridPane.rowIndex="1" />
-            <DatePicker fx:id="dtpAno" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="lblCaixa" text="Caixa" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cbxCaixa" prefHeight="25.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="lblColecao" text="Colecao" GridPane.rowIndex="3" />
-            <ComboBox fx:id="cbxColecao" prefHeight="25.0" prefWidth="268.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="lblObservacao" text="Observação" />
+            <TextField fx:id="txtObservacao" GridPane.columnIndex="1" />
+            <Label fx:id="lblDataDevolucao" text="Devolução" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dtpDataDevolucao" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="lblCliente" text="Cliente" GridPane.rowIndex="3" />
+            <ComboBox fx:id="cbxCliente" prefHeight="25.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="lblFilme" text="Filme" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cbxFilme" prefHeight="25.0" prefWidth="268.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="lblDataEmprestimo" text="Empréstimo" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dtpDataEmprestimo" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <HBox fx:id="pnlBotoes" alignment="BASELINE_CENTER" layoutX="100.0" layoutY="206.0" prefHeight="30.0" prefWidth="200.0" spacing="10.0">

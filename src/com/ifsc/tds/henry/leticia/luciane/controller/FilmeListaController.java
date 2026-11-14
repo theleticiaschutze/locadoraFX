@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.dao.RevistaDAO;
-import com.peregrinoti.entity.Revista;
+import com.ifsc.tds.henry.leticia.luciane.dao.FilmeDAO;
+import com.ifsc.tds.henry.leticia.luciane.entity.Filme;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,13 +44,13 @@ public class FilmeListaController implements Initializable {
 	private AnchorPane pnlEsquerda;
 
 	@FXML
-	private TableView<Revista> tbvRevistas;
+	private TableView<Filme> tbvFilmes;
 
 	@FXML
-	private TableColumn<Revista, Long> tbcCodigo;
+	private TableColumn<Filme, Long> tbcCodigo;
 
 	@FXML
-	private TableColumn<Revista, String> tbcNome;
+	private TableColumn<Filme, String> tbcNome;
 
 	@FXML
 	private AnchorPane pnlDireita;
@@ -65,25 +65,7 @@ public class FilmeListaController implements Initializable {
 	private Label lblNome;
 
 	@FXML
-	private Label lblAno;
-
-	@FXML
 	private Label lblNomeValor;
-
-	@FXML
-	private Label lblAnoValor;
-
-	@FXML
-	private Label lblCaixa;
-
-	@FXML
-	private Label lblCaixaValor;
-
-	@FXML
-	private Label lblColecao;
-
-	@FXML
-	private Label lblColecaoValor;
 
 	@FXML
 	private ButtonBar barBotoes;
@@ -106,161 +88,161 @@ public class FilmeListaController implements Initializable {
 	@FXML
 	private Tooltip tlpExcluir;
 
-	private List<Revista> listaRevistas;
-	private ObservableList<Revista> observableListaRevistas = FXCollections.observableArrayList();
-	private RevistaDAO revistaDAO;
+	private List<Filme> listaFilmes;
+	private ObservableList<Filme> observableListaFilmes = FXCollections.observableArrayList();
+	private FilmeDAO filmeDAO;
 
-	public static final String REVISTA_EDITAR = " - Editar";
-	public static final String REVISTA_INCLUIR = " - Incluir";
+	public static final String FILME_EDITAR = " - Editar";
+	public static final String FILME_INCLUIR = " - Incluir";
 
 	@FXML
 	void onClickBtnEditar(ActionEvent event) {
-		Revista revista = this.tbvRevistas.getSelectionModel().getSelectedItem();
+		Filme filme = this.tbvFilmes.getSelectionModel().getSelectedItem();
 
-		if (revista != null) {
-			boolean btnConfirmarClic = this.onShowTelaRevistaEditar(revista, FilmeListaController.REVISTA_EDITAR);
+		if (filme != null) {
+			boolean btnConfirmarClic = this.onShowTelaFilmeEditar(filme, FilmeListaController.FILME_EDITAR);
 
 			if (btnConfirmarClic) {
-				this.getRevistaDAO().update(revista, null);
-				this.carregarTableViewRevistas();
+				this.getFilmeDAO().update(filme, null);
+				this.carregarTableViewFilmes();
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha uma revista na tabela!");
+			alerta.setContentText("Por favor, escolha um filme na tabela!");
 			alerta.show();
 		}
 	}
 
 	@FXML
 	void onClickBtnExcluir(ActionEvent event) {
-		Revista revista = this.tbvRevistas.getSelectionModel().getSelectedItem();
+		Filme filme = this.tbvFilmes.getSelectionModel().getSelectedItem();
 
-		if (revista != null) {
+		if (filme != null) {
 
 			Alert alerta = new Alert(AlertType.CONFIRMATION);
 			alerta.setTitle("Pergunta");
-			alerta.setHeaderText("Confirma a exclus�o da revista?\n" + revista.getNome());
+			alerta.setHeaderText("Confirma a exclusão do filme?\n" + filme.getNome());
 
 			ButtonType botaoNao = ButtonType.NO;
 			ButtonType botaoSim = ButtonType.YES;
 			alerta.getButtonTypes().setAll(botaoSim, botaoNao);
 			Optional<ButtonType> resultado = alerta.showAndWait();
 
-			if (resultado.get() == botaoSim) {
-				this.getRevistaDAO().delete(revista);
-				this.carregarTableViewRevistas();
+			if (resultado.isPresent() && resultado.get() == botaoSim) {
+			    this.getFilmeDAO().delete(filme);
+			    this.carregarTableViewFilmes();
+			    this.selecionarItemTableViewFilmes(null);
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha uma revista na tabela!");
+			alerta.setContentText("Por favor, escolha um filme na tabela!");
 			alerta.show();
 		}
 	}
 
 	@FXML
 	void onClickBtnIncluir(ActionEvent event) {
-		Revista revista = new Revista();
+		Filme filme = new Filme();
 
-		boolean btnConfirmarClic = this.onShowTelaRevistaEditar(revista, FilmeListaController.REVISTA_INCLUIR);
+		boolean btnConfirmarClic = this.onShowTelaFilmeEditar(filme, FilmeListaController.FILME_INCLUIR);
 
 		if (btnConfirmarClic) {
-			this.getRevistaDAO().save(revista);
-			this.carregarTableViewRevistas();
+			this.getFilmeDAO().save(filme);
+			this.carregarTableViewFilmes();
 		}
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		this.setRevistaDAO(new RevistaDAO());
-		this.carregarTableViewRevistas();
-		this.selecionarItemTableViewRevistas(null);
+		this.setFilmeDAO(new FilmeDAO());
+		this.carregarTableViewFilmes();
+		this.selecionarItemTableViewFilmes(null);
 
-		this.tbvRevistas.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> selecionarItemTableViewRevistas(newValue));
+		this.tbvFilmes.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> selecionarItemTableViewFilmes(newValue));
 	}
 
-	public RevistaDAO getRevistaDAO() {
-		return revistaDAO;
+	public FilmeDAO getFilmeDAO() {
+		return filmeDAO;
 	}
 
-	public void setRevistaDAO(RevistaDAO revistaDAO) {
-		this.revistaDAO = revistaDAO;
+	public void setFilmeDAO(FilmeDAO filmeDAO) {
+		this.filmeDAO = filmeDAO;
+	}
+	
+	public List<Filme> retornaListagemFilme() {
+	    this.setFilmeDAO(new FilmeDAO());
+	    return this.getFilmeDAO().getAll();
 	}
 
-	public List<Revista> getListaRevistas() {
-		return listaRevistas;
+	public List<Filme> getListaFilmes() {
+		return listaFilmes;
 	}
 
-	public void setListaRevistas(List<Revista> listaRevistas) {
-		this.listaRevistas = listaRevistas;
+	public void setListaFilmes(List<Filme> listaFilmes) {
+		this.listaFilmes = listaFilmes;
 	}
 
-	public ObservableList<Revista> getObservableListaRevistas() {
-		return observableListaRevistas;
+	public ObservableList<Filme> getObservableListaFilmes() {
+		return observableListaFilmes;
 	}
 
-	public void setObservableListaRevistas(ObservableList<Revista> observableListaRevistas) {
-		this.observableListaRevistas = observableListaRevistas;
+	public void setObservableListaFilmes(ObservableList<Filme> observableListaFilmes) {
+		this.observableListaFilmes = observableListaFilmes;
 	}
 
 	public boolean onCloseQuery() {
 		Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
 		alerta.setTitle("Pergunta");
-		alerta.setHeaderText("Deseja sair do cadastro de revista?");
+		alerta.setHeaderText("Deseja sair do cadastro de filme?");
 		ButtonType buttonTypeNO = ButtonType.NO;
 		ButtonType buttonTypeYES = ButtonType.YES;
 		alerta.getButtonTypes().setAll(buttonTypeYES, buttonTypeNO);
 		Optional<ButtonType> result = alerta.showAndWait();
-		return result.get() == buttonTypeYES ? true : false;
+		return result.isPresent() && result.get() == buttonTypeYES;
 	}
 
-	public void carregarTableViewRevistas() {
+	public void carregarTableViewFilmes() {
 		this.tbcCodigo.setCellValueFactory(new PropertyValueFactory<>("id"));
 		this.tbcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
-		this.setListaRevistas(this.getRevistaDAO().getAll());
-		this.setObservableListaRevistas(FXCollections.observableArrayList(this.getListaRevistas()));
-		this.tbvRevistas.setItems(this.getObservableListaRevistas());
+		this.setListaFilmes(this.getFilmeDAO().getAll());
+		this.setObservableListaFilmes(FXCollections.observableArrayList(this.getListaFilmes()));
+		this.tbvFilmes.setItems(this.getObservableListaFilmes());
 	}
 
-	public void selecionarItemTableViewRevistas(Revista revista) {
-		if (revista != null) {
-			this.lblNomeValor.setText(revista.getNome());
-			this.lblAnoValor.setText(revista.getAnoFormatado());
-			this.lblCaixaValor.setText(revista.getCaixa().getCor());
-			this.lblColecaoValor.setText(revista.getTipoColecao().getNome());
+	public void selecionarItemTableViewFilmes(Filme filme) {
+		if (filme != null) {
+			this.lblNomeValor.setText(filme.getNome());
 		} else {
 			this.lblNomeValor.setText("");
-			this.lblAnoValor.setText("");
-			this.lblCaixaValor.setText("");
-			this.lblColecaoValor.setText("");
 		}
 	}
 
-	public boolean onShowTelaRevistaEditar(Revista revista, String operacao) {
+	public boolean onShowTelaFilmeEditar(Filme filme, String operacao) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/RevistaEdit.fxml"));
-			Parent revistaEditXML = loader.load();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/FilmeEdit.fxml"));
+			Parent filmeEditXML = loader.load();
 
 			// criando uma janela nova
-			Stage janelaRevistaEditar = new Stage();
-			janelaRevistaEditar.setTitle("Cadastro de revista" + operacao);
-			janelaRevistaEditar.initModality(Modality.APPLICATION_MODAL);
-			janelaRevistaEditar.resizableProperty().setValue(Boolean.FALSE);
+			Stage janelaFilmeEditar = new Stage();
+			janelaFilmeEditar.setTitle("Cadastro de filme" + operacao);
+			janelaFilmeEditar.initModality(Modality.APPLICATION_MODAL);
+			janelaFilmeEditar.resizableProperty().setValue(Boolean.FALSE);
 
-			Scene revistaEditLayout = new Scene(revistaEditXML);
-			janelaRevistaEditar.setScene(revistaEditLayout);
+			Scene filmeEditLayout = new Scene(filmeEditXML);
+			janelaFilmeEditar.setScene(filmeEditLayout);
 
 			// carregando o controller e a scene
-			FilmeEditController revistaEditController = loader.getController();
-			revistaEditController.setJanelaRevistaEdit(janelaRevistaEditar);
-			revistaEditController.populaTela(revista);
+			FilmeEditController filmeEditController = loader.getController();
+			filmeEditController.setJanelaFilmeEdit(janelaFilmeEditar);
+			filmeEditController.populaTela(filme);
 
 			// mostrando a tela
-			janelaRevistaEditar.showAndWait();
+			janelaFilmeEditar.showAndWait();
 
-			return revistaEditController.isOkClick();
+			return filmeEditController.isOkClick();
 
 		} catch (Exception e) {
 			e.printStackTrace();

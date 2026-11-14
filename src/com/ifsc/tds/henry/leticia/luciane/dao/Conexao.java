@@ -10,7 +10,7 @@ public class Conexao {
 
 	private static final String SENHA_BANCO = "";
 
-	private static final String URL_BANCO = "jdbc:mysql://localhost:3306/locadoradb?autoReconnect=true&useSSL=false";
+	private static final String URL_BANCO = "jdbc:mysql://localhost:3306/locadora?autoReconnect=true&useSSL=false";
 
 	public Connection getConnection() {
 		Connection conexao = null;
