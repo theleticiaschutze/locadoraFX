@@ -119,7 +119,7 @@ public class ClienteListaController implements Initializable {
 
 		if (cliente != null) {
 			boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente,
-					ClienteListaController.AMIGO_EDITAR);
+					ClienteListaController.CLIENTE_EDITAR);
 
 			if (btnConfirmarClic) {
 				this.getClienteDAO().update(cliente, null);

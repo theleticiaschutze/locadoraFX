@@ -1,6 +1,17 @@
 package com.ifsc.tds.henry.leticia.luciane.controller;
 
-import java.net.URL;
+import com.ifsc.tds.henry.leticia.luciane.entity.Cliente;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class ClienteEditController {
 
@@ -54,7 +65,7 @@ public class ClienteEditController {
 		if (validarCampos()) {
 			this.cliente.setNome(this.txtNome.getText());			
 			this.cliente.setTelefone(this.txtTelefone.getText());
-			this.cliente.setEmail(this.txtmail.getText());
+			this.cliente.setEmail(this.txtEmail.getText());
 
 			this.okClick = true;
 			this.getJanelaClienteEdit().close();
@@ -74,7 +85,7 @@ public class ClienteEditController {
 
 		this.txtNome.setText(cliente.getNome());		
 		this.txtTelefone.setText(cliente.getTelefone());
-		this.txtEmail.setText(cliente.getEndereco());
+		this.txtEmail.setText(cliente.getEmail());
 	}
 
 	public boolean isOkClick() {
