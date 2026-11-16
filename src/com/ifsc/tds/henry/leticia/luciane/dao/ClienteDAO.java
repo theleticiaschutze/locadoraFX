@@ -84,8 +84,8 @@ public class ClienteDAO implements DAO<Cliente> {
 
 			stm = conexao.prepareStatement(sql);
 			stm.setString(1, cliente.getNome());
-			stm.setString(3, cliente.getTelefone());
-			stm.setString(4, cliente.getEmail());
+			stm.setString(2, cliente.getTelefone());
+			stm.setString(3, cliente.getEmail());
 
 			stm.execute();
 
