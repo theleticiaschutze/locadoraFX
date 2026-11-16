@@ -1,5 +1,7 @@
 package com.ifsc.tds.henry.leticia.luciane.entity;
 
+import java.time.LocalDate;
+
 public class Cliente {
 
 	private Long id;
@@ -9,6 +11,16 @@ public class Cliente {
 	private String telefone;
 
 	private String email;
+	
+	private LocalDate dataCadastro;
+	
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
 
 	public Long getId() {
 		return id;

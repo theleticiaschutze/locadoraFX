@@ -1,6 +1,7 @@
 package com.ifsc.tds.henry.leticia.luciane.controller;
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -263,10 +264,18 @@ public class ClienteListaController implements Initializable {
 			this.lblNomeValor.setText(cliente.getNome());
 			this.lblTelefoneValor.setText(cliente.getTelefone());
 			this.lblEmailValor.setText(cliente.getEmail());
+
+			if (cliente.getDataCadastro() != null) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				this.lblDataCadastroValor.setText(cliente.getDataCadastro().format(formatter));
+			} else {
+				this.lblDataCadastroValor.setText("");
+			}
 		} else {
 			this.lblNomeValor.setText("");
 			this.lblTelefoneValor.setText("");
 			this.lblEmailValor.setText("");
+			this.lblDataCadastroValor.setText("");
 		}
 	}
 	

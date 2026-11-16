@@ -22,13 +22,13 @@ public class ClienteDAO implements DAO<Cliente> {
 
 		String sql = "select * from cliente";
 
-		// Recupera a conex�o com o banco
+		// Recupera a conexão com o banco
 		Connection conexao = null;
 
-		// Criar uma prepara��o da consulta
+		// Criar uma preparação da consulta
 		PreparedStatement stm = null;
 
-		// Criar uma classe que guarde o retorno da opera��o
+		// Criar uma classe que guarde o retorno da operação
 		ResultSet rset = null;
 
 		try {
@@ -46,6 +46,9 @@ public class ClienteDAO implements DAO<Cliente> {
 				cliente.setNome(rset.getString("nome"));
 				cliente.setTelefone(rset.getString("telefone"));
 				cliente.setEmail(rset.getString("email"));
+				if (rset.getDate("data_cadastro") != null) {
+					cliente.setDataCadastro(rset.getDate("data_cadastro").toLocalDate());
+				}
 
 				clientes.add(cliente);
 			}
@@ -86,6 +89,7 @@ public class ClienteDAO implements DAO<Cliente> {
 			stm.setString(1, cliente.getNome());
 			stm.setString(2, cliente.getTelefone());
 			stm.setString(3, cliente.getEmail());
+			
 
 			stm.execute();
 
@@ -123,9 +127,9 @@ public class ClienteDAO implements DAO<Cliente> {
 
 			stm = conexao.prepareStatement(sql);
 			stm.setString(1, cliente.getNome());
-			stm.setString(3, cliente.getTelefone());
-			stm.setString(4, cliente.getEmail());
-			stm.setLong(5, cliente.getId());
+			stm.setString(2, cliente.getTelefone());
+			stm.setString(3, cliente.getEmail());
+			stm.setLong(4, cliente.getId());
 
 			stm.execute();
 
