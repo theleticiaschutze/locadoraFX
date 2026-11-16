@@ -262,10 +262,19 @@ public class ClienteListaController implements Initializable {
 		if (cliente != null) {
 			this.lblNomeValor.setText(cliente.getNome());
 			this.lblTelefoneValor.setText(cliente.getTelefone());
+			this.lblEmailValor.setText(cliente.getEmail());
 		} else {
 			this.lblNomeValor.setText("");
 			this.lblTelefoneValor.setText("");
+			this.lblEmailValor.setText("");
 		}
+	}
+	
+	public List<Cliente> retornaListagemCliente() {
+		if (this.getClienteDAO() == null) {
+			this.setClienteDAO(new ClienteDAO());
+		}
+		return this.getClienteDAO().getAll();
 	}
 
 

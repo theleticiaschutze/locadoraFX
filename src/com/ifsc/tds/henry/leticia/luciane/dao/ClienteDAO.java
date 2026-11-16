@@ -17,7 +17,7 @@ public class ClienteDAO implements DAO<Cliente> {
 	}
 
 	@Override
-	public List getAll() {
+	public List<Cliente> getAll() {
 		List<Cliente> clientes = new ArrayList<Cliente>();
 
 		String sql = "select * from cliente";
@@ -71,7 +71,7 @@ public class ClienteDAO implements DAO<Cliente> {
 	@Override
 	public int save(Cliente cliente) {
 		String sql = "insert into cliente(nome, telefone, email) ";
-		sql += "values (?, ?, ?, ?)";
+		sql += "values (?, ?, ?)";
 
 		// Recupera a conexão com o banco
 		Connection conexao = null;
@@ -112,10 +112,10 @@ public class ClienteDAO implements DAO<Cliente> {
 	public boolean update(Cliente cliente, String[] params) {
 		String sql = "update cliente set nome = ?, telefone = ?, email = ? where id = ?";
 
-		// Recupera a conex�o com o banco
+		// Recupera a conexão com o banco
 		Connection conexao = null;
 
-		// Criar uma prepara��o da consulta
+		// Criar uma preparação da consulta
 		PreparedStatement stm = null;
 
 		try {

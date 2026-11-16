@@ -40,7 +40,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `locadora`.`emprestimo` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,  
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
-  `data_emprestimo` DATE NULL DEFAULT NULL,
+  `data_emprestimo` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `data_devolucao` DATE NULL DEFAULT NULL,
   `cliente_id` INT(11) NOT NULL,
   `filme_id` INT(11) NOT NULL,  
