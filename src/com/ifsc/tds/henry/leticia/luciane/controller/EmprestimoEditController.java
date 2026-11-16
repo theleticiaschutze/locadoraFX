@@ -88,17 +88,14 @@ public class EmprestimoEditController implements Initializable {
 	void onClickBtnOK(ActionEvent event) {
 		if (validarCampos()) {
 			this.emprestimo.setObservacao(this.txtObservacao.getText());
-			if (this.dtpDataEmprestimo.getValue() != null) {
-				this.emprestimo.setDataEmprestimo(Date.valueOf(this.dtpDataEmprestimo.getValue()));
-			}
 			this.emprestimo.setDataDevolucao(
 					this.dtpDataDevolucao.getValue() != null ? Date.valueOf(this.dtpDataDevolucao.getValue()) : null);
+			this.emprestimo.setCliente(this.cbxCliente.getValue());
+			this.emprestimo.setFilme(this.cbxFilme.getValue());
+			
+			this.okClick = true;
+			this.getJanelaEmprestimoEdit().close();
 		}
-		this.emprestimo.setCliente(this.cbxCliente.getValue());
-		this.emprestimo.setFilme(this.cbxFilme.getValue());
-
-		this.okClick = true;
-		this.getJanelaEmprestimoEdit().close();
 	}
 
 	@Override
@@ -123,10 +120,10 @@ public class EmprestimoEditController implements Initializable {
 
 		this.txtObservacao.setText(this.emprestimo.getObservacao() != null ? this.emprestimo.getObservacao() : "");
 
-		if (this.emprestimo.getDataEmprestimo() != null) {
+		if (this.emprestimo.getDataEmprestimo() != null && this.dtpDataEmprestimo != null) {
 			this.dtpDataEmprestimo.setValue(this.emprestimo.getDataEmprestimo().toLocalDate());
 		}
-		if (this.emprestimo.getDataDevolucao() != null) {
+		if (this.emprestimo.getDataDevolucao() != null && this.dtpDataDevolucao != null) {
 			this.dtpDataDevolucao.setValue(this.emprestimo.getDataDevolucao().toLocalDate());
 		}
 
@@ -151,8 +148,8 @@ public class EmprestimoEditController implements Initializable {
 		if (this.cbxFilme.getValue() == null) {
 			mensagemErros += "Selecione um filme!\n";
 		}
-		if (this.dtpDataEmprestimo.getValue() == null) {
-			mensagemErros += "Informe a data de empréstimo!\n";
+		if (this.dtpDataDevolucao.getValue() == null) {
+			mensagemErros += "Informe a data de devolução!\n";
 		}
 
 		if (mensagemErros.length() == 0) {

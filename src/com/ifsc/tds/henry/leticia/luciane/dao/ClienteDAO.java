@@ -10,10 +10,57 @@ import com.ifsc.tds.henry.leticia.luciane.entity.Cliente;
 
 public class ClienteDAO implements DAO<Cliente> {
 
-	@Override
 	public Object get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Cliente cliente = null;
+
+		String sql = "select * from cliente where id = ?";
+
+		// Recupera a conexão com o banco
+		Connection conexao = null;
+
+		// Criar uma preparação da consulta
+		PreparedStatement stm = null;
+
+		// Criar uma classe que guarde o retorno da operação
+		ResultSet rset = null;
+
+		try {
+			conexao = new Conexao().getConnection();
+
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, id.intValue());
+			rset = stm.executeQuery();
+
+			while (rset.next()) {
+				cliente = new Cliente();
+
+				// atribui campo para atributo
+				cliente.setId(rset.getLong("id"));
+				cliente.setNome(rset.getString("nome"));
+				cliente.setTelefone(rset.getString("telefone"));
+				cliente.setEmail(rset.getString("email"));
+
+				if (rset.getDate("data_cadastro") != null) {
+					cliente.setDataCadastro(rset.getDate("data_cadastro").toLocalDate());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+
+				if (conexao != null) {
+					conexao.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return cliente;
 	}
 
 	@Override
