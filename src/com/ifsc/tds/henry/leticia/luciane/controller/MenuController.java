@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.ifsc.tds.henry.leticia.luciane.menu.Menu;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
@@ -49,7 +50,6 @@ public class MenuController implements Initializable {
 
 	@FXML
 	private MenuItem mnoEmprestimo;
-
 
 	@FXML
 	private SeparatorMenuItem sepCadastro;
@@ -92,7 +92,7 @@ public class MenuController implements Initializable {
     void onClickMnoCliente(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/peregrinoti/view/ClienteLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/ClienteLista.fxml"));
 			Parent caixaListaXML = loader.load();
 
 			// carregando o controller e a scene
@@ -155,7 +155,7 @@ public class MenuController implements Initializable {
 
 			// carregando o controller e a scene
 			EmprestimoListaController emprestimoListaController = loader.getController();
-			Scene revistaListaLayout = new Scene(emprestimoListaXML);
+			Scene emprestimoListaLayout = new Scene(emprestimoListaXML);
 
 			this.getStage().setScene(emprestimoListaLayout);
 			this.getStage().setTitle("Cadastro de emprestimo");

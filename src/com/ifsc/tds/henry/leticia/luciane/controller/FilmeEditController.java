@@ -4,9 +4,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
 
-import com.peregrinoti.entity.Caixa;
-import com.peregrinoti.entity.Revista;
-import com.peregrinoti.entity.TipoColecao;
+import com.ifsc.tds.henry.leticia.luciane.entity.Filme;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,13 +46,7 @@ public class FilmeEditController implements Initializable {
 	private Label lblCaixa;
 
 	@FXML
-	private ComboBox<Caixa> cbxCaixa;
-
-	@FXML
 	private Label lblColecao;
-
-	@FXML
-	private ComboBox<TipoColecao> cbxColecao;
 
 	@FXML
 	private HBox pnlBotoes;
@@ -65,66 +57,45 @@ public class FilmeEditController implements Initializable {
 	@FXML
 	private Button btnCancela;
 
-	private Stage janelaRevistaEdit;
+	private Stage janelaFilmeEdit;
 
-	private Revista revista;
+	private Filme filme;
 
 	private boolean okClick = false;
 
-	private CaixaListaController caixaListaController;
-	private TipoColecaoListaController tipoColecaoListaController;
 
 	@FXML
 	void onClickBtnCancela(ActionEvent event) {
-		this.getJanelaRevistaEdit().close();
+		this.getJanelaFilmeEdit().close();
 	}
 
 	@FXML
 	void onClickBtnOK(ActionEvent event) {
 		if (validarCampos()) {
-			this.revista.setNome(this.txtNome.getText());
-			this.revista.setAno(Date.valueOf(this.dtpAno.getValue()));
-			this.revista.setCaixa(this.cbxCaixa.getSelectionModel().getSelectedItem());
-			this.revista.setTipoColecao(this.cbxColecao.getSelectionModel().getSelectedItem());
+			this.filme.setNome(this.txtNome.getText());
 
 			this.okClick = true;
-			this.getJanelaRevistaEdit().close();
+			this.getJanelaFilmeEdit().close();
 		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.caixaListaController = new CaixaListaController();
-		this.tipoColecaoListaController = new TipoColecaoListaController();
-
-		this.carregarComboBoxCaixas();
-		this.carregarComboBoxTipoColecoes();
 	}
 
-	public Stage getJanelaRevistaEdit() {
-		return janelaRevistaEdit;
+	public Stage getJanelaFilmeEdit() {
+		return janelaFilmeEdit;
 	}
 
-	public void setJanelaRevistaEdit(Stage janelaRevistaEdit) {
-		this.janelaRevistaEdit = janelaRevistaEdit;
+	public void setJanelaFilmeEdit(Stage janelaFilmeEdit) {
+		this.janelaFilmeEdit = janelaFilmeEdit;
 	}
 
-	public void populaTela(Revista revista) {
-		this.revista = revista;
+	public void populaTela(Filme filme) {
+		this.filme = filme;
 
-		this.txtNome.setText(this.revista.getNome());
+		this.txtNome.setText(this.filme.getNome());
 
-		if (this.revista.getAno() != null) {
-			this.dtpAno.setValue(this.revista.getAno().toLocalDate());
-		}
-
-		if (this.revista.getCaixa() != null) {
-			this.cbxCaixa.setValue(this.revista.getCaixa());
-		}
-
-		if (this.revista.getTipoColecao() != null) {
-			this.cbxColecao.setValue(this.revista.getTipoColecao());
-		}
 	}
 
 	public boolean isOkClick() {
@@ -142,9 +113,9 @@ public class FilmeEditController implements Initializable {
 			return true;
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.initOwner(this.janelaRevistaEdit);
-			alerta.setTitle("Dados inv�lidos!");
-			alerta.setHeaderText("Favor corrigir as seguintes informa��es:");
+			alerta.initOwner(this.janelaFilmeEdit);
+			alerta.setTitle("Dados inválidos!");
+			alerta.setHeaderText("Favor corrigir as seguintes informações:");
 			alerta.setContentText(mensagemErros);
 			alerta.showAndWait();
 
@@ -152,17 +123,4 @@ public class FilmeEditController implements Initializable {
 		}
 	}
 
-	public void carregarComboBoxCaixas() {
-		ObservableList<Caixa> observableListaCaixa = FXCollections
-				.observableArrayList(this.caixaListaController.retornaListagemCaixa());
-
-		this.cbxCaixa.setItems(observableListaCaixa);
-	}
-
-	public void carregarComboBoxTipoColecoes() {
-		ObservableList<TipoColecao> observableListaTipoColecao = FXCollections
-				.observableArrayList(this.tipoColecaoListaController.retornaListagemTipoColecao());
-
-		this.cbxColecao.setItems(observableListaTipoColecao);
-	}
 }
