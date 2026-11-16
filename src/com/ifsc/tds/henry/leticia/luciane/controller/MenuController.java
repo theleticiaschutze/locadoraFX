@@ -150,7 +150,7 @@ public class MenuController implements Initializable {
 	void onClickMnoEmprestimo(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/lucine/view/EmprestimoLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/EmprestimoLista.fxml"));
 			Parent emprestimoListaXML = loader.load();
 
 			// carregando o controller e a scene
