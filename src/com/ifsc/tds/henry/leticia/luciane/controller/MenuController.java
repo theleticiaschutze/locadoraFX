@@ -121,7 +121,7 @@ public class MenuController implements Initializable {
 	void onClickMnoFilme(ActionEvent event) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/FilmeLista.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/FilmeLista.fxml"));
 			Parent filmeListaXML = loader.load();
 
 			// carregando o controller e a scene
