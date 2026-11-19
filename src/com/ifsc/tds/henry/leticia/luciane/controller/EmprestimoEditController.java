@@ -2,6 +2,7 @@ package com.ifsc.tds.henry.leticia.luciane.controller;
 
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.ifsc.tds.henry.leticia.luciane.entity.Cliente;
@@ -92,7 +93,7 @@ public class EmprestimoEditController implements Initializable {
 					this.dtpDataDevolucao.getValue() != null ? Date.valueOf(this.dtpDataDevolucao.getValue()) : null);
 			this.emprestimo.setCliente(this.cbxCliente.getValue());
 			this.emprestimo.setFilme(this.cbxFilme.getValue());
-			
+
 			this.okClick = true;
 			this.getJanelaEmprestimoEdit().close();
 		}
@@ -150,6 +151,8 @@ public class EmprestimoEditController implements Initializable {
 		}
 		if (this.dtpDataDevolucao.getValue() == null) {
 			mensagemErros += "Informe a data de devolução!\n";
+		} else if (this.dtpDataDevolucao.getValue().isBefore(LocalDate.now())) {
+			mensagemErros += "A data de devolução não pode ser anterior à data de hoje!\n";
 		}
 
 		if (mensagemErros.length() == 0) {
