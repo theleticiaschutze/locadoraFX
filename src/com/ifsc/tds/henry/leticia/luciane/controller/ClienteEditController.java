@@ -39,15 +39,14 @@ public class ClienteEditController {
 	@FXML
 	private AnchorPane pnlPrincipal;
 
-    @FXML
-    private TextField txtEmail;
+	@FXML
+	private TextField txtEmail;
 
-    @FXML
-    private TextField txtNome;
+	@FXML
+	private TextField txtNome;
 
-    @FXML
-    private TextField txtTelefone;
-
+	@FXML
+	private TextField txtTelefone;
 
 	private Stage janelaClienteEdit;
 
@@ -63,7 +62,7 @@ public class ClienteEditController {
 	@FXML
 	void onClickBtnOK(ActionEvent event) {
 		if (validarCampos()) {
-			this.cliente.setNome(this.txtNome.getText());			
+			this.cliente.setNome(this.txtNome.getText());
 			this.cliente.setTelefone(this.txtTelefone.getText());
 			this.cliente.setEmail(this.txtEmail.getText());
 
@@ -83,7 +82,7 @@ public class ClienteEditController {
 	public void populaTela(Cliente cliente) {
 		this.cliente = cliente;
 
-		this.txtNome.setText(cliente.getNome());		
+		this.txtNome.setText(cliente.getNome());
 		this.txtTelefone.setText(cliente.getTelefone());
 		this.txtEmail.setText(cliente.getEmail());
 	}
@@ -95,8 +94,10 @@ public class ClienteEditController {
 	private boolean validarCampos() {
 		String mensagemErros = new String();
 
-		if (this.txtNome.getText() == null || this.txtNome.getText().trim().length() == 0) {
-			mensagemErros += "Informe o nome!\n";
+		if (this.txtNome.getText() == null || this.txtNome.getText().trim().length() == 0
+				|| this.txtTelefone.getText() == null || this.txtTelefone.getText().trim().length() == 0
+				|| this.txtEmail.getText() == null || this.txtEmail.getText().trim().length() == 0) {
+			mensagemErros += "Preencha todas as informações!\n";
 		}
 
 		if (mensagemErros.length() == 0) {
@@ -105,7 +106,7 @@ public class ClienteEditController {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
 			alerta.initOwner(this.janelaClienteEdit);
 			alerta.setTitle("Dados inválidos!");
-			alerta.setHeaderText("Favor corrigir as seguintes informações:");
+			alerta.setHeaderText("Favor corrigir:");
 			alerta.setContentText(mensagemErros);
 			alerta.showAndWait();
 

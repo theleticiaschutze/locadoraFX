@@ -1,11 +1,10 @@
 adicionar checagem para não deixar data devolução ser anterior a atual
+
 adicionar opção de marcar como devolvido
 
 checagem para alguel ser unico (1 filme)
 
-checagem de foreign key para filme (excluir filme)
 
-verificar checagem de campos
 
 talvez fazer checagem por filme alugado no combobox
 
