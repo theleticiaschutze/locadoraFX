@@ -48,31 +48,31 @@ public class ClienteListaController implements Initializable {
 	private Button btnInclur;
 
 	@FXML
-    private Label lblDataCadastro;
+	private Label lblDataCadastro;
 
-    @FXML
-    private Label lblDataCadastroValor;
+	@FXML
+	private Label lblDataCadastroValor;
 
-    @FXML
-    private Label lblDetalhes;
+	@FXML
+	private Label lblDetalhes;
 
-    @FXML
-    private Label lblEmail;
+	@FXML
+	private Label lblEmail;
 
-    @FXML
-    private Label lblEmailValor;
+	@FXML
+	private Label lblEmailValor;
 
-    @FXML
-    private Label lblNome;
+	@FXML
+	private Label lblNome;
 
-    @FXML
-    private Label lblNomeValor;
+	@FXML
+	private Label lblNomeValor;
 
-    @FXML
-    private Label lblTelefone;
+	@FXML
+	private Label lblTelefone;
 
-    @FXML
-    private Label lblTelefoneValor;
+	@FXML
+	private Label lblTelefoneValor;
 
 	@FXML
 	private GridPane pnlDetalhes;
@@ -119,8 +119,7 @@ public class ClienteListaController implements Initializable {
 		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
 		if (cliente != null) {
-			boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente,
-					ClienteListaController.CLIENTE_EDITAR);
+			boolean btnConfirmarClic = this.onShowTelaClienteEditar(cliente, ClienteListaController.CLIENTE_EDITAR);
 
 			if (btnConfirmarClic) {
 				this.getClienteDAO().update(cliente, null);
@@ -139,25 +138,38 @@ public class ClienteListaController implements Initializable {
 		Cliente cliente = this.tbvClientes.getSelectionModel().getSelectedItem();
 
 		if (cliente != null) {
-
-			Alert alerta = new Alert(AlertType.CONFIRMATION);
-			alerta.setTitle("Pergunta");
-			alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
-
-			ButtonType botaoNao = ButtonType.NO;
-			ButtonType botaoSim = ButtonType.YES;
-			alerta.getButtonTypes().setAll(botaoSim, botaoNao);
-			Optional<ButtonType> resultado = alerta.showAndWait();
-
-			if (resultado.get() == botaoSim) {
-				this.getClienteDAO().delete(cliente);
-				this.carregarTableViewClientes();
+			if (this.getClienteDAO().possuiEmprestimos(cliente.getId())) {
+				Alert alerta = new Alert(AlertType.WARNING);
+				alerta.setTitle("Atenção");
+				alerta.setHeaderText("Não é possível excluir!");
+				alerta.setContentText("Este cliente possui empréstimos ativos.");
+				alerta.show();
+				return;
 			}
-		} else {
-			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Por favor, escolha um cliente na tabela!");
-			alerta.show();
+
+			if (cliente != null) {
+
+				Alert alerta = new Alert(AlertType.CONFIRMATION);
+				alerta.setTitle("Pergunta");
+				alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
+
+				ButtonType botaoNao = ButtonType.NO;
+				ButtonType botaoSim = ButtonType.YES;
+				alerta.getButtonTypes().setAll(botaoSim, botaoNao);
+				Optional<ButtonType> resultado = alerta.showAndWait();
+
+				if (resultado.get() == botaoSim) {
+					this.getClienteDAO().delete(cliente);
+					this.carregarTableViewClientes();
+
+				} else {
+					alerta = new Alert(Alert.AlertType.ERROR);
+					alerta.setContentText("Por favor, escolha um cliente na tabela!");
+					alerta.show();
+				}
+			}
 		}
+
 	}
 
 	@FXML
@@ -175,7 +187,8 @@ public class ClienteListaController implements Initializable {
 	public boolean onShowTelaClienteEditar(Cliente cliente, String operacao) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/ClienteEdit.fxml"));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/ClienteEdit.fxml"));
 			Parent clienteEditXML = loader.load();
 
 			// criando uma janela nova
@@ -278,13 +291,12 @@ public class ClienteListaController implements Initializable {
 			this.lblDataCadastroValor.setText("");
 		}
 	}
-	
+
 	public List<Cliente> retornaListagemCliente() {
 		if (this.getClienteDAO() == null) {
 			this.setClienteDAO(new ClienteDAO());
 		}
 		return this.getClienteDAO().getAll();
 	}
-
 
 }
