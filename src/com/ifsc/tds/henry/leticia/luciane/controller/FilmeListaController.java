@@ -118,6 +118,14 @@ public class FilmeListaController implements Initializable {
 		Filme filme = this.tbvFilmes.getSelectionModel().getSelectedItem();
 
 		if (filme != null) {
+			if (this.getFilmeDAO().possuiEmprestimos(filme.getId())) {
+				Alert alerta = new Alert(AlertType.WARNING);
+				alerta.setTitle("Atenção");
+				alerta.setHeaderText("Não é possível excluir!");
+				alerta.setContentText("Este filme possui empréstimos registrados.");
+				alerta.show();
+				return;
+			}
 
 			Alert alerta = new Alert(AlertType.CONFIRMATION);
 			alerta.setTitle("Pergunta");
@@ -129,9 +137,9 @@ public class FilmeListaController implements Initializable {
 			Optional<ButtonType> resultado = alerta.showAndWait();
 
 			if (resultado.isPresent() && resultado.get() == botaoSim) {
-			    this.getFilmeDAO().delete(filme);
-			    this.carregarTableViewFilmes();
-			    this.selecionarItemTableViewFilmes(null);
+				this.getFilmeDAO().delete(filme);
+				this.carregarTableViewFilmes();
+				this.selecionarItemTableViewFilmes(null);
 			}
 		} else {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -169,10 +177,10 @@ public class FilmeListaController implements Initializable {
 	public void setFilmeDAO(FilmeDAO filmeDAO) {
 		this.filmeDAO = filmeDAO;
 	}
-	
+
 	public List<Filme> retornaListagemFilme() {
-	    this.setFilmeDAO(new FilmeDAO());
-	    return this.getFilmeDAO().getAll();
+		this.setFilmeDAO(new FilmeDAO());
+		return this.getFilmeDAO().getAll();
 	}
 
 	public List<Filme> getListaFilmes() {
@@ -222,7 +230,8 @@ public class FilmeListaController implements Initializable {
 	public boolean onShowTelaFilmeEditar(Filme filme, String operacao) {
 		try {
 			// carregando o loader
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/FilmeEdit.fxml"));
+			FXMLLoader loader = new FXMLLoader(
+					getClass().getResource("/com/ifsc/tds/henry/leticia/luciane/view/FilmeEdit.fxml"));
 			Parent filmeEditXML = loader.load();
 
 			// criando uma janela nova

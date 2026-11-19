@@ -230,4 +230,36 @@ public class FilmeDAO implements DAO<Filme> {
 		}
 
 	}
+	
+	public boolean possuiEmprestimos(Long filmeId) {
+		String sql = "select count(*) from emprestimo where filme_id = ?";
+		Connection conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rset = null;
+
+		try {
+			conexao = new Conexao().getConnection();
+			stm = conexao.prepareStatement(sql);
+			stm.setLong(1, filmeId);
+			rset = stm.executeQuery();
+
+			if (rset.next()) {
+				return rset.getInt(1) > 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rset != null)
+					rset.close();
+				if (stm != null)
+					stm.close();
+				if (conexao != null)
+					conexao.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 }

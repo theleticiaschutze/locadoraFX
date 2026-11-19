@@ -142,34 +142,30 @@ public class ClienteListaController implements Initializable {
 				Alert alerta = new Alert(AlertType.WARNING);
 				alerta.setTitle("Atenção");
 				alerta.setHeaderText("Não é possível excluir!");
-				alerta.setContentText("Este cliente possui empréstimos ativos.");
+				alerta.setContentText("Este cliente possui empréstimos registrados.");
 				alerta.show();
 				return;
 			}
 
-			if (cliente != null) {
+			Alert alerta = new Alert(AlertType.CONFIRMATION);
+			alerta.setTitle("Pergunta");
+			alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
 
-				Alert alerta = new Alert(AlertType.CONFIRMATION);
-				alerta.setTitle("Pergunta");
-				alerta.setHeaderText("Confirma a exclusão do cliente?\n" + cliente.getNome());
+			ButtonType botaoNao = ButtonType.NO;
+			ButtonType botaoSim = ButtonType.YES;
+			alerta.getButtonTypes().setAll(botaoSim, botaoNao);
+			Optional<ButtonType> resultado = alerta.showAndWait();
 
-				ButtonType botaoNao = ButtonType.NO;
-				ButtonType botaoSim = ButtonType.YES;
-				alerta.getButtonTypes().setAll(botaoSim, botaoNao);
-				Optional<ButtonType> resultado = alerta.showAndWait();
+			if (resultado.get() == botaoSim) {
+				this.getClienteDAO().delete(cliente);
+				this.carregarTableViewClientes();
 
-				if (resultado.get() == botaoSim) {
-					this.getClienteDAO().delete(cliente);
-					this.carregarTableViewClientes();
-
-				} else {
-					alerta = new Alert(Alert.AlertType.ERROR);
-					alerta.setContentText("Por favor, escolha um cliente na tabela!");
-					alerta.show();
-				}
 			}
+		} else {
+			Alert alerta = new Alert(Alert.AlertType.ERROR);
+			alerta.setContentText("Por favor, escolha um cliente na tabela!");
+			alerta.show();
 		}
-
 	}
 
 	@FXML
